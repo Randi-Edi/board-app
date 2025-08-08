@@ -3,13 +3,39 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-primary: #2563eb;
+  --color-secondary: #F4F5F6;
+  --color-sidebar: #ffffff;
+  --color-header: #ffffff;
+  --color-bg: #f5f6fa;
+  --status-todo: #e5e7eb;
+  --status-inprogress: #fbbf24;
+  --status-approved: #4ade80;
+  --status-reject: #f87171;
+  --font-geist-sans: 'Inter', sans-serif;
+  --font-geist-mono: 'Courier New', monospace;
+  --color-nav-text: #777E90;
 }
 
-@theme inline {
+@theme  {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --background: var(--background);
+  --foreground: var(--foreground);
+  --color-primary: var(--color-primary);
+  --color-sidebar: var(--color-sidebar);
+  --color-header: var(--color-header);
+  --color-bg: var(--color-bg);
+  --status-todo: var(--status-todo);
+  --status-inprogress: var(--status-inprogress);
+  --status-approved: var(--status-approved);
+  --status-reject: var(--status-reject);
+  --nav-text: var(--nav-text);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +46,6 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+  background-color: var(--color-bg);
 }
