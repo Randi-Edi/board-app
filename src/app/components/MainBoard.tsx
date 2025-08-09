@@ -104,7 +104,7 @@ export default function MainBoard({ search = "" }: { search?: string }) {
                             <div
                                 key={col.id}
                                 id={col.id}
-                                className="kanban-column min-w-[280px] md:min-w-[260px] flex-shrink-0 flex flex-col border-r border-[#E6E8EC] bg-white"
+                                className="min-w-[280px] w-full md:w-[280px] lg:w-[295px] flex-shrink-0 flex flex-col border-r border-[#E6E8EC] bg-white"
                             >
                                 {/* Column Header */}
                                 <div className="flex items-center justify-between border-b border-[#E6E8EC] px-3 py-3">
