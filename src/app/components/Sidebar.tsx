@@ -24,7 +24,7 @@ export default function Sidebar({
             {/* Sidebar container */}
             <aside
                 className={`
-          w-[288px] bg-sidebar border-r border-[#E6E8EC]
+          w-[288px] min-w-[288px] bg-sidebar border-r border-[#E6E8EC]
           flex flex-col h-full z-50
           transform transition-transform duration-300
           fixed top-0 left-0
