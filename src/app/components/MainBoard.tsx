@@ -16,6 +16,9 @@ import DroppableColumn from "./DroppableColumn";
 import DraggableTask from "./DraggableTask";
 import BoardDetails from "./BoardDetails";
 import { projectMembers } from "../lib/constants";
+import { FooterType } from "../lib/types/footerType";
+
+
 
 export default function MainBoard({ search = "" }: { search?: string }) {
     const { board, moveTask, moveTaskWithinColumn } = useBoardStore();
@@ -143,16 +146,14 @@ export default function MainBoard({ search = "" }: { search?: string }) {
                                                     labelColor={task.labelColor}
                                                     title={task.title}
                                                     members={task.members}
-                                                    dueDate={
-                                                        "dueDate" in task ? (task as any).dueDate : "Unknown"
-                                                    }
+                                                    dueDate={"dueDate" in task ? (task as { dueDate: string }).dueDate : "Unknown"}
                                                     priority={task.priority}
                                                     shareCount={task.shareCount ?? 0}
                                                     messageCount={task.messageCount ?? 0}
                                                     footerType={
                                                         task.footerType === "link"
                                                             ? "groupCall"
-                                                            : (task.footerType as any)
+                                                            : (task.footerType ?? "none") as FooterType
                                                     }
                                                     imageUrl={
                                                         "imageUrl" in task ? task.imageUrl : undefined

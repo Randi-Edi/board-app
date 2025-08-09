@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { mockBoardData } from "../lib/mockData";
 import { Column } from "../lib/interfaces/colum";
+import { Task } from "../lib/interfaces/task";
 
 interface BoardState {
   board: Column[];
@@ -34,7 +35,7 @@ export const useBoardStore = create<BoardState>()(
 
           // Find and remove task from old column
           const taskIndex = fromCol.tasks.findIndex(
-            (_: any, idx: number) => `${fromColId}-${idx}` === taskId
+            (_t: Task, idx: number) => `${fromColId}-${idx}` === taskId
           );
           if (taskIndex === -1) return state;
 
