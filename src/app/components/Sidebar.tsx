@@ -125,11 +125,11 @@ export default function Sidebar() {
 
 
             {/* Navigation */}
-            <nav className="flex-1 px-1 mt-6">
+            <nav className="flex-1 mt-6">
                 {navItems.map((item, index) => (
                     <div
                         key={index}
-                        className={`pl-6 pr-3 py-4 hover:bg-gray-100 rounded-lg`}
+                        className={`pl-6 pr-3 py-4 hover:bg-gray-100`}
                     >
                         <button
                             className={`cursor-pointer flex items-center ${item.badge ? "justify-between" : "gap-3"

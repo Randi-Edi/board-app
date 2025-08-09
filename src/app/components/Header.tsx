@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Header() {
+export default function Header({ search, setSearch }: { search: string, setSearch: (s: string) => void }) {
     return (
         <header className="bg-header h-20 flex items-center justify-between px-4 md:px-6 border-b border-[#E6E8EC]">
             {/* Left Section */}
@@ -36,6 +36,8 @@ export default function Header() {
                             type="text"
                             placeholder="Search tasks..."
                             className="bg-secondary w-[240px] h-12 pl-10 pr-4 rounded-lg text-[12px] focus:outline-none"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
                         />
                         <Image
                             src="/images/icons/search.svg"

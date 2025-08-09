@@ -45,7 +45,7 @@ const TaskCard = ({
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                         <span
-                            className="w-2 h-2 rounded-full"
+                            className="w-2 h-2"
                             style={{ backgroundColor: labelColor }}
                         />
                         <span className="text-[#B1B5C3] text-xs">{label}</span>
@@ -110,27 +110,29 @@ const TaskCard = ({
             </div>
 
             {/* Footer Section */}
-            <div className="border-t border-gray-200 mt-3 pt-2 flex items-center justify-start gap-4 text-xs text-gray-500">
-                {/* Share count */}
-                <div className="flex items-center gap-1">
-                    <Image
-                        src="/images/icons/link.svg"
-                        alt="Share"
-                        width={14}
-                        height={14}
-                    />
-                    <span>{shareCount}</span>
-                </div>
+            <div className="border-t border-gray-200 mt-3 pt-2 flex items-center justify-between gap-4 text-xs text-gray-500">
+                <div className="flex items-center gap-4">
+                    {/* Share count */}
+                    <div className="flex items-center gap-1">
+                        <Image
+                            src="/images/icons/link.svg"
+                            alt="Share"
+                            width={14}
+                            height={14}
+                        />
+                        <span>{shareCount}</span>
+                    </div>
 
-                {/* Message count */}
-                <div className="flex items-center gap-1">
-                    <Image
-                        src="/images/icons/message.svg"
-                        alt="Messages"
-                        width={14}
-                        height={14}
-                    />
-                    <span>{messageCount}</span>
+                    {/* Message count */}
+                    <div className="flex items-center gap-1">
+                        <Image
+                            src="/images/icons/message.svg"
+                            alt="Messages"
+                            width={14}
+                            height={14}
+                        />
+                        <span>{messageCount}</span>
+                    </div>
                 </div>
 
                 {/* Only show footer type if it's not "none" */}
@@ -142,7 +144,7 @@ const TaskCard = ({
                             width={14}
                             height={14}
                         />
-                        <span className={`${footerType == "reports" ? "text-red-500" : footerType == "stream" ? "text-blue-500" : ''}`}>{footerMap[footerType].text}</span>
+                        <span className={`${footerType == "reports" ? "text-red-500" : ["stream", "groupCall"].includes(footerType) ? "text-blue-500" : ''}`}>{footerMap[footerType].text}</span>
                     </div>
                 )}
             </div>

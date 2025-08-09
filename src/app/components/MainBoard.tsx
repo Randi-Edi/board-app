@@ -4,7 +4,17 @@ import { projectMembers } from "../lib/constants";
 import TaskCard from "./TaskCard";
 import { mockBoardData } from "../lib/mockData";
 
-const MainBoard = () => {
+const MainBoard = ({ search = "" }: { search?: string }) => {
+
+    const filteredBoard = mockBoardData.map((col) => ({
+        ...col,
+        tasks: search
+            ? col.tasks.filter((task) =>
+                task.title.toLowerCase().includes(search.toLowerCase())
+            )
+            : col.tasks,
+    }));
+
     return (
         <div className="flex flex-col w-full h-full overflow-hidden">
             {/* Project Description */}
@@ -19,7 +29,7 @@ const MainBoard = () => {
             {/* Kanban Board */}
             <div className="flex-1 overflow-x-auto overflow-y-hidden">
                 <div className="flex flex-nowrap h-full">
-                    {mockBoardData.map((col) => (
+                    {filteredBoard.map((col) => (
                         <div
                             key={col.id}
                             id={col.id}
