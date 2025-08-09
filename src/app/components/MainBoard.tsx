@@ -30,7 +30,6 @@ export default function MainBoard({ search = "" }: { search?: string }) {
             : col.tasks,
     }));
 
-    // This ensures DnD only renders on the client
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -38,8 +37,6 @@ export default function MainBoard({ search = "" }: { search?: string }) {
     const sensors = useSensors(
         useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
     );
-
-
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
@@ -50,10 +47,8 @@ export default function MainBoard({ search = "" }: { search?: string }) {
 
         const fromCol = board.find((c) => c.id === fromColId);
         const toCol = board.find((c) => c.id === toColId);
-
         if (!fromCol || !toCol) return;
 
-        // Find positions at drag end from fresh state
         const fromIndex = fromCol.tasks.findIndex((_, idx) => `${fromColId}-${idx}` === active.id);
         const toIndex = toCol.tasks.findIndex((_, idx) => `${toColId}-${idx}` === over.id);
 
@@ -64,8 +59,6 @@ export default function MainBoard({ search = "" }: { search?: string }) {
         }
     };
 
-
-
     const handleDragMove = (event: DragMoveEvent) => {
         const scrollContainer = document.querySelector(
             `[data-column-id="${event.over?.id}"]`
@@ -74,8 +67,8 @@ export default function MainBoard({ search = "" }: { search?: string }) {
         if (scrollContainer) {
             const { bottom, top } = scrollContainer.getBoundingClientRect();
             const threshold = 50;
-
             const activatorEvent = event.activatorEvent as MouseEvent;
+
             if (event.delta.y > 0 && bottom - activatorEvent.clientY < threshold) {
                 scrollContainer.scrollTop += 10;
             } else if (event.delta.y < 0 && activatorEvent.clientY - top < threshold) {
@@ -84,14 +77,13 @@ export default function MainBoard({ search = "" }: { search?: string }) {
         }
     };
 
-    // Render skeleton or nothing until mounted to avoid hydration mismatch
     if (!mounted) {
         return <div className="flex flex-col w-full h-full bg-gray-50" />;
     }
 
     return (
         <div className="flex flex-col w-full h-full overflow-hidden">
-            {/* Project Description */}
+            {/* Project Details */}
             <BoardDetails
                 title="Sport XI Project"
                 status="In progress"
@@ -103,13 +95,13 @@ export default function MainBoard({ search = "" }: { search?: string }) {
 
             {/* Kanban Board */}
             <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragMove={handleDragMove}>
-                <div className="flex-1 overflow-x-auto overflow-y-hidden">
-                    <div className="flex flex-nowrap h-full">
+                <div className="flex-1 overflow-x-auto overflow-y-hidden scrollbar-thin">
+                    <div className="flex flex-nowrap h-full min-h-0">
                         {filteredBoard.map((col) => (
                             <div
                                 key={col.id}
                                 id={col.id}
-                                className="flex-1 min-w-[260px] flex-shrink-0 flex flex-col border-r border-[#E6E8EC] bg-white"
+                                className="kanban-column min-w-[280px] md:min-w-[260px] flex-shrink-0 flex flex-col border-r border-[#E6E8EC] bg-white"
                             >
                                 {/* Column Header */}
                                 <div className="flex items-center justify-between border-b border-[#E6E8EC] px-3 py-3">
@@ -139,7 +131,9 @@ export default function MainBoard({ search = "" }: { search?: string }) {
                                 {/* Column Tasks */}
                                 <DroppableColumn
                                     id={col.id}
-                                    className="flex-1 flex flex-col gap-4 p-3 overflow-y-auto bg-[#F4F5F6]"
+                                    data-column-id={col.id}
+                                    className="flex-1 flex flex-col gap-4 p-3 overflow-y-auto bg-[#F4F5F6] scrollbar-thin"
+                                    style={{ maxHeight: "calc(100vh - 200px)" }}
                                 >
                                     {col.tasks.map((task, index) => (
                                         <DraggableTask key={`${col.id}-${index}`} id={`${col.id}-${index}`}>
@@ -172,7 +166,6 @@ export default function MainBoard({ search = "" }: { search?: string }) {
                         ))}
                     </div>
                 </div>
-
             </DndContext>
         </div>
     );

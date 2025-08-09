@@ -1,9 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { TaskCardProps } from "../lib/interfaces/taskcard";
 import { FooterItem } from "../lib/interfaces/footerItem";
-
-
 
 const TaskCard = ({
     label,
@@ -33,13 +33,7 @@ const TaskCard = ({
     };
 
     return (
-        <div
-            className="bg-white border border-gray-200 p-4 flex-shrink-0 flex flex-col justify-between"
-            style={{
-                minWidth: "260px",
-                borderRadius: "12px",
-            }}
-        >
+        <div className="task-card bg-white border border-gray-200 p-4 flex-shrink-0 flex flex-col justify-between rounded-xl min-w-[260px]">
             {/* Top Section */}
             <div>
                 <div className="flex items-center justify-between mb-2">
@@ -50,7 +44,6 @@ const TaskCard = ({
                         />
                         <span className="text-[#B1B5C3] text-xs">{label}</span>
                     </div>
-
                     <Image
                         src="/images/icons/more_fill.svg"
                         alt="More options"
@@ -62,6 +55,7 @@ const TaskCard = ({
 
                 <p className="font-medium text-gray-800">{title}</p>
 
+                {/* Members & Priority */}
                 <div className="flex items-center gap-3 mt-3">
                     <div className="flex -space-x-2">
                         {visibleMembers.map((img, idx) => (
@@ -93,26 +87,23 @@ const TaskCard = ({
                     </div>
                 </div>
 
-                {/* Optional Image / Placeholder */}
-                <div className="mt-3">
-                    {imageUrl && (
-                        <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden bg-gray-800">
-                            <Image
-                                src="/images/image_placeholder.svg"
-                                alt="Upload"
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-
-                    )}
-                </div>
+                {/* Optional Image */}
+                {imageUrl && (
+                    <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden bg-gray-800 mt-3">
+                        <Image
+                            src={imageUrl}
+                            alt="Task"
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                    </div>
+                )}
             </div>
 
             {/* Footer Section */}
             <div className="border-t border-gray-200 mt-3 pt-2 flex items-center justify-between gap-4 text-xs text-gray-500">
                 <div className="flex items-center gap-4">
-                    {/* Share count */}
                     <div className="flex items-center gap-1">
                         <Image
                             src="/images/icons/link.svg"
@@ -123,7 +114,6 @@ const TaskCard = ({
                         <span>{shareCount}</span>
                     </div>
 
-                    {/* Message count */}
                     <div className="flex items-center gap-1">
                         <Image
                             src="/images/icons/message.svg"
@@ -135,7 +125,6 @@ const TaskCard = ({
                     </div>
                 </div>
 
-                {/* Only show footer type if it's not "none" */}
                 {footerType !== "none" && (
                     <div className="flex items-center gap-1">
                         <Image
@@ -144,7 +133,17 @@ const TaskCard = ({
                             width={14}
                             height={14}
                         />
-                        <span className={`${footerType == "reports" ? "text-red-500" : ["stream", "groupCall"].includes(footerType) ? "text-blue-500" : ''}`}>{footerMap[footerType].text}</span>
+                        <span
+                            className={
+                                footerType === "reports"
+                                    ? "text-red-500"
+                                    : ["stream", "groupCall"].includes(footerType)
+                                        ? "text-blue-500"
+                                        : ""
+                            }
+                        >
+                            {footerMap[footerType].text}
+                        </span>
                     </div>
                 )}
             </div>
