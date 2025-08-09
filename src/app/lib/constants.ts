@@ -21,3 +21,11 @@ export const navItems = [
     icon: "/images/icons/user.svg",
   },
 ];
+
+export const projectMembers: string[] = [
+  "/images/icons/user_profile.svg",
+  "/images/icons/user_profile.svg",
+  "/images/icons/user_profile.svg",
+  "/images/icons/user_profile.svg",
+  "/images/icons/user_profile.svg",
+];
