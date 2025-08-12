@@ -77,7 +77,7 @@ const TaskCard = ({
 
                         {/* Animated dropdown */}
                         <div
-                            className={`absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10
+                            className={`absolute p-0.5 right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10
                             transform transition-all duration-200 origin-top-right
                             ${menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
                         `}
@@ -89,7 +89,7 @@ const TaskCard = ({
                                         onChangeStatus(status);
                                         setMenuOpen(false);
                                     }}
-                                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+                                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors rounded-xl"
                                 >
                                     {status}
                                 </button>
