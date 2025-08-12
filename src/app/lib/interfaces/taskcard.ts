@@ -17,4 +17,6 @@ export interface TaskCardProps {
     | "image"
     | "none";
   imageUrl?: string; // optional image
+  currentStatus: string;
+  onChangeStatus: (status: string) => void;
 }

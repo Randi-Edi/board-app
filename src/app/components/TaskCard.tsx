@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TaskCardProps } from "../lib/interfaces/taskcard";
 import { FooterItem } from "../lib/interfaces/footerItem";
 
@@ -16,10 +16,30 @@ const TaskCard = ({
     messageCount,
     footerType,
     imageUrl,
+    currentStatus,
+    onChangeStatus,
 }: TaskCardProps) => {
     const maxVisible = 3;
     const visibleMembers = members.slice(0, maxVisible);
     const remainingCount = members.length - maxVisible;
+
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    const statuses = ["To Do", "In Progress", "Approved", "Reject"];
+    const filteredStatuses = statuses.filter(s => s !== currentStatus);
+
+    // Close on outside click
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setMenuOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
 
     const footerMap: Record<string, FooterItem> = {
         due: { icon: "/images/icons/calendar.svg", text: `Due: ${dueDate || ""}` },
@@ -44,13 +64,38 @@ const TaskCard = ({
                         />
                         <span className="text-[#B1B5C3] text-xs">{label}</span>
                     </div>
-                    <Image
-                        src="/images/icons/more_fill.svg"
-                        alt="More options"
-                        width={16}
-                        height={16}
-                        className="cursor-pointer"
-                    />
+                    {/* Three dots + Dropdown */}
+                    <div className="relative" ref={menuRef}>
+                        <Image
+                            src="/images/icons/more_fill.svg"
+                            alt="More options"
+                            width={16}
+                            height={16}
+                            className="cursor-pointer"
+                            onClick={() => setMenuOpen(prev => !prev)}
+                        />
+
+                        {/* Animated dropdown */}
+                        <div
+                            className={`absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-lg z-10
+                            transform transition-all duration-200 origin-top-right
+                            ${menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}
+                        `}
+                        >
+                            {filteredStatuses.map(status => (
+                                <button
+                                    key={status}
+                                    onClick={() => {
+                                        onChangeStatus(status);
+                                        setMenuOpen(false);
+                                    }}
+                                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+                                >
+                                    {status}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 <p className="font-medium text-gray-800">{title}</p>

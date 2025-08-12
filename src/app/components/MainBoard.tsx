@@ -158,6 +158,13 @@ export default function MainBoard({ search = "" }: { search?: string }) {
                                                     imageUrl={
                                                         "imageUrl" in task ? task.imageUrl : undefined
                                                     }
+                                                    currentStatus={col.title} // pass current column
+                                                    onChangeStatus={(newStatus) => {
+                                                        const toCol = board.find(c => c.title === newStatus);
+                                                        if (toCol) {
+                                                            moveTask(`${col.id}-${index}`, col.id, toCol.id, toCol.tasks.length);
+                                                        }
+                                                    }}
                                                 />
                                             </div>
                                         </DraggableTask>
